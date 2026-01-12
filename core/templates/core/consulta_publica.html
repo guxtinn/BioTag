@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioTag | Consulta Pública - {{ animal.nome }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --biotag-green: #006400;
+            --biotag-dark: #1a4731;
+            --biotag-light: #f4f7f6;
+            --biotag-accent: #ffc107;
+        }
+
+        body {
+            background-color: var(--biotag-light);
+            font-family: 'Inter', sans-serif;
+            color: #333;
+        }
+
+        /* Container principal com fundo decorativo */
+        .public-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle at top right, #e8f5e9 0%, #f4f7f6 40%);
+        }
+
+        /* Card Estilo BioTag Painel */
+        .animal-card {
+            background: white;
+            border: none;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Barra de destaque superior */
+        .card-accent {
+            background: var(--biotag-green);
+            height: 8px;
+            width: 100%;
+        }
+
+        /* Foto com borda e sombra */
+        .photo-container {
+            padding: 25px 25px 10px 25px;
+            text-align: center;
+        }
+
+        .img-animal {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 18px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border: 4px solid white;
+        }
+
+        .no-photo {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #eee;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccc;
+            font-size: 4rem;
+        }
+
+        /* Badge de Status */
+        .status-badge {
+            background: #e8f5e9;
+            color: var(--biotag-green);
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 6px 16px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Info Grid */
+        .info-section {
+            padding: 0 30px 30px 30px;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--biotag-dark);
+            margin-bottom: 15px;
+        }
+
+        /* Box de Histórico */
+        .memo-box {
+            background: #f8f9fa;
+            border-left: 4px solid var(--biotag-green);
+            padding: 15px;
+            border-radius: 0 12px 12px 0;
+            margin-top: 10px;
+        }
+
+        .btn-print {
+            background: var(--biotag-green);
+            color: white;
+            border-radius: 12px;
+            padding: 12px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-print:hover {
+            background: var(--biotag-dark);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .biotag-logo-text {
+            color: var(--biotag-green);
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0;
+        }
+        .admin-actions {
+            background: #fff5f5; /* Um fundo levemente diferente para destacar a área de risco */
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px dashed #f5c2c7;
+        }
+
+        .btn-admin-edit {
+            background: transparent;
+            color: #0d6efd;
+            border: 2px solid #0d6efd;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-admin-edit:hover {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .btn-admin-delete {
+            background: transparent;
+            color: #dc3545;
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+            padding: 10px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .btn-admin-delete:hover {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Ajuste no layout dos botões */
+        .admin-button-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="public-wrapper">
+    <div class="text-center mb-4">
+        <h2 class="biotag-logo-text"><i class="bi bi-shield-check"></i> BioTag</h2>
+        <small class="text-muted fw-bold text-uppercase">Consulta de Registro Oficial</small>
+    </div>
+
+    <div class="animal-card">
+        <div class="card-accent"></div>
+        
+        <div class="photo-container">
+            {% if animal.foto %}
+                <img src="{{ animal.foto.url }}" class="img-animal" alt="Foto de {{ animal.nome }}">
+            {% else %}
+                <div class="no-photo shadow-sm">
+                    <i class="bi bi-camera"></i>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="info-section">
+            <div class="text-center mt-3 mb-4">
+                <div class="status-badge">Sincronizado via Tag NFC</div>
+                <h1 class="fw-bold m-0" style="color: var(--biotag-dark);">{{ animal.nome }}</h1>
+                <code class="text-muted">ID: {{ animal.id_tag_nfc }}</code>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="info-label">Espécie</div>
+                    <div class="info-value">{{ animal.especie }}</div>
+                </div>
+                <div class="col-6">
+                    <div class="info-label">Sexo</div>
+                    <div class="info-value">{{ animal.get_sexo_display|default:"Não informado" }}</div>
+                </div>
+                <div class="col-6">
+                    <div class="info-label">Idade Estimada</div>
+                    <div class="info-value">{{ animal.idade|default:"-" }} anos</div>
+                </div>
+                <div class="col-6">
+                    <div class="info-label">Data Nasc.</div>
+                    <div class="info-value">{{ animal.data_nascimento|date:"d/m/Y"|default:"-" }}</div>
+                </div>
+                <div class="col-12">
+                    <div class="info-label">Admin Responsável</div>
+                    <div class="info-value text-success">
+                        <i class="bi bi-person-check-fill me-1"></i>
+                        {{ animal.admin_responsavel.get_full_name|default:animal.admin_responsavel.username }}
+                    </div>
+                </div>
+            </div>
+
+            {% if animal.cuidados_essenciais %}
+            <div class="memo-box">
+                <div class="info-label" style="color: var(--biotag-green);">Notas de Cuidado</div>
+                <p class="small mb-0">{{ animal.cuidados_essenciais }}</p>
+            </div>
+            {% endif %}
+            {% if user.is_staff %}
+            <div class="admin-actions mt-4">
+                <label class="info-label text-danger d-block mb-3">
+                    <i class="bi bi-shield-lock-fill"></i> Gerenciamento Restrito
+                </label>
+                
+                <div class="admin-button-group">
+                    <a href="{% url 'editar_animal' animal.id_tag_nfc %}" class="btn-admin-edit">
+                        <i class="bi bi-pencil-square me-2"></i> Editar
+                    </a>
+                    
+                    <button type="button" class="btn-admin-delete" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="bi bi-trash3 me-2"></i> Excluir
+                    </button>
+                    
+                </div>
+            </div>
+            <div class="text-center mt-4 p-3 border rounded bg-light">
+                <h6 class="fw-bold text-muted">QR Code para Impressão</h6>
+                <img src="{% url 'gerar_qr_code' animal.id_tag_nfc %}" class="img-fluid mb-2" style="max-width: 150px;">
+                <p class="small text-muted mb-0">ID: {{ animal.id_tag_nfc }}</p>
+                <a href="{% url 'gerar_qr_code' animal.id_tag_nfc %}" download="qrcode-{{ animal.nome }}.png" class="btn btn-sm btn-outline-dark mt-2">
+                    <i class="bi bi-download"></i> Baixar QR Code
+                </a>
+            </div>
+            {% endif %}
+            <button onclick="window.print()" class="btn-print shadow-sm">
+                <i class="bi bi-download me-2"></i>Baixar Ficha de Identificação
+            </button>
+        </div>
+    </div>
+
+    <p class="mt-4 text-muted small text-center">
+        Este registro é parte do sistema <strong>BioTag</strong>.<br>
+        &copy; 2026 Todos os direitos reservados.
+    </p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 20px; border: none;">
+            <div class="modal-header border-0 pt-4 px-4">
+                <h5 class="modal-title fw-bold" id="deleteModalLabel">Confirmar Exclusão</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body px-4">
+                <p class="text-muted">Você está prestes a excluir permanentemente o registro de <strong>{{ animal.nome }}</strong> ({{ animal.id_tag_nfc }}).</p>
+                <p class="text-danger small"><i class="bi bi-exclamation-triangle-fill"></i> Esta ação não poderá ser desfeita!</p>
+            </div>
+            <div class="modal-footer border-0 pb-4 px-4">
+                <button type="button" class="btn btn-light fw-bold" data-bs-dismiss="modal" style="border-radius: 10px; padding: 10px 20px;">Cancelar</button>
+                
+                <form action="{% url 'excluir_animal' animal.id_tag_nfc %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger fw-bold" style="border-radius: 10px; padding: 10px 20px;">
+                        Sim, Excluir Registro
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

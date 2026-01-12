@@ -1,0 +1,201 @@
+/* static/css/custom.css (CORREÇÃO DE LINKS FLUTUANTES NO MOBILE) */
+
+/* 1. VARIÁVEIS DE CORES */
+:root {
+    --if-green: #007f3f; 
+    --if-yellow: #ffb81c; 
+    --bg-light: #f8f9fa;
+    --text-dark: #343a40;
+    --text-light: #ffffff;
+    --sidebar-width-expanded: 250px;
+    --sidebar-width-collapsed: 80px;
+}
+
+/* 2. ESTILO GERAL E FONTES (MANTIDO) */
+body {
+    background-color: var(--bg-light);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* 3. WRAPPER DA APLICAÇÃO (MANTIDO) */
+#app-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* 4. BARRA LATERAL (SIDEBAR) (MANTIDO) */
+#app-sidebar {
+    width: var(--sidebar-width-collapsed); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    background: var(--if-green);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transform: translateX(0); 
+}
+
+/* ESTADO EXPANDIDO */
+#app-sidebar.active {
+    width: var(--sidebar-width-expanded);
+}
+
+.sidebar-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    white-space: nowrap;
+}
+
+/* ESTILO DA LOGO */
+.sidebar-logo {
+    display: block;
+    width: 100%;
+    max-width: 40px; /* Versão recolhida */
+    height: auto;
+    transition: max-width 0.3s ease 0.1s;
+}
+
+#app-sidebar.active .sidebar-logo {
+    max-width: 200px; /* Versão expandida */
+}
+
+/* 5. ESTILO DOS BOTÕES DE NAVEGAÇÃO (MANTIDO) */
+#app-sidebar ul {
+    padding: 0;
+    list-style: none;
+    /* CORREÇÃO APLICADA: No desktop/tablet, esconde o texto quando recolhido */
+    visibility: visible; 
+}
+
+#app-sidebar ul li a {
+    padding: 10px 25px;
+    display: flex;
+    align-items: center;
+    font-size: 1.1em;
+    color: rgba(255, 255, 255, 0.8) !important;
+    text-decoration: none !important; 
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+#app-sidebar ul li a i {
+    margin-right: 15px;
+    min-width: 25px;
+}
+
+.nav-text {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+}
+#app-sidebar.active .nav-text {
+    opacity: 1;
+    transition: opacity 0.3s ease 0.1s;
+}
+
+#app-sidebar ul li a:hover {
+    color: var(--if-green) !important;
+    background: var(--if-yellow) !important;
+}
+
+#app-sidebar ul li.active > a {
+    color: var(--if-green) !important; 
+    background: var(--if-yellow) !important; 
+    font-weight: 600;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+/* 6. CONTEÚDO PRINCIPAL (DESKTOP E TABLET) (MANTIDO) */
+#app-content {
+    width: 100%;
+    margin-left: var(--sidebar-width-collapsed);
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+}
+
+#app-content.active {
+    margin-left: var(--sidebar-width-expanded);
+}
+
+.top-header {
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.main-content-area {
+    padding: 0 30px; 
+}
+
+/* Estilos de Botão de Busca e Toggle (MANTIDO) */
+.btn-green-outline {
+    color: var(--if-green);
+    border-color: var(--if-green);
+}
+.btn-green-outline:hover {
+    color: var(--text-light);
+    background-color: var(--if-green);
+}
+
+.card-shadow {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-search {
+    background-color: var(--if-green);
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.btn-search:hover {
+    background-color: #006032;
+    color: var(--text-light);
+}
+/* *** ATENÇÃO: VERIFIQUE SE HÁ UMA CHAVE } FECHANDO A REGRA ANTERIOR AQUI *** */
+
+/* 7. RESPONSIVIDADE (MOBILE) - CORREÇÃO DE LINKS FLUTUANTES */
+@media (max-width: 768px) {
+    /* Esconde a lista de links quando a sidebar não está ativa */
+    #app-sidebar:not(.active) .list-unstyled.components {
+        display: none;
+    }
+    
+    /* MÓVEL: A sidebar deve começar fora da tela */
+    #app-sidebar {
+        transform: translateX(calc(-1 * var(--sidebar-width-expanded))); 
+        width: var(--sidebar-width-expanded);
+    }
+    /* MÓVEL: Quando ativa, ela desliza para a posição 0 */
+    #app-sidebar.active {
+        transform: translateX(0);
+    }
+    
+    /* MÓVEL: O conteúdo principal ocupa 100% da largura, sem margem */
+    #app-content {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    /* MÓVEL: Garante que o texto seja visível quando o menu for aberto */
+    .nav-text {
+        opacity: 1; 
+    }
+}
