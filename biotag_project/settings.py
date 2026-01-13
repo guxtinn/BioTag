@@ -20,19 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n%251nr&9)sjl)hs8xwcc8f@b84ydbb6o=-^n85uhgpv9!+(ey'
-
+SECRET_KEY = os.getenv('django-insecure-n%251nr&9)sjl)hs8xwcc8f@b84ydbb6o=-^n85uhgpv9!+(ey')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'glutinously-autocephalous-ta.ngrok-free.dev', 
+    'biotag.onrender.com', 
     'localhost', 
     '127.0.0.1'
 ]
-CSRF_TRUSTED_ORIGINS = ['https://glutinously-autocephalous-ta.ngrok-free.dev']
-
-MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Application definition
@@ -54,6 +50,7 @@ LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,7 +89,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '19022013Jh!', # <--- Mude aqui
         'HOST': 'db.mkfeplnbbaocipiwjxfx.supabase.co', # <--- Mude aqui
-        'PORT': '6543',
+        'PORT': '5432',
         'OPTIONS': {
             # O Supabase exige conexão SSL/TLS
             'sslmode': 'require', 
@@ -136,7 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
