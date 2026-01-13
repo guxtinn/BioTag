@@ -86,9 +86,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres', # ou o nome do seu DB
-        'USER': 'postgres',
-        'PASSWORD': '19022013Jh!', # <--- Mude aqui
-        'HOST': 'db.mkfeplnbbaocipiwjxfx.supabase.co', # <--- Mude aqui
+        'USER': 'postgres.mkfeplnbbaocipiwjxfx',
+        'PASSWORD': os.environ.get('DB_PASSWORD', '19022013Jh!'), # <--- Mude aqui
+        'HOST': 'aws-1-sa-east-1.pooler.supabase.com', # <--- Mude aqui
         'PORT': '6543',
         'OPTIONS': {
             # O Supabase exige conexão SSL/TLS
