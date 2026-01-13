@@ -4,3 +4,4 @@ qrcode==8.2
 gunicorn
 whitenoise
 django
+django-widget-tweaks
