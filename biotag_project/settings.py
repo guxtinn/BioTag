@@ -89,7 +89,7 @@ DATABASES = {
         'USER': 'postgres',
         'PASSWORD': '19022013Jh!', # <--- Mude aqui
         'HOST': 'db.mkfeplnbbaocipiwjxfx.supabase.co', # <--- Mude aqui
-        'PORT': '5432',
+        'PORT': '6543',
         'OPTIONS': {
             # O Supabase exige conexão SSL/TLS
             'sslmode': 'require', 
