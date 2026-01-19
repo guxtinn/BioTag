@@ -39,10 +39,18 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
+    'cloudinary',
     'django.contrib.staticfiles',
     'core',
     'widget_tweaks', # <--- ADICIONE ESTA LINHA
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'guxtinn',
+    'API_KEY': '649866212411553',
+    'API_SECRET': '5gNHbcX2LbTtsku0wS3RKFscN88'
+}
 
 LOGIN_URL = '/login/'
 
@@ -147,3 +155,5 @@ AUTHENTICATION_BACKENDS = [
     'core.backends.EmailBackend', # <--- Usaremos este caminho
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
