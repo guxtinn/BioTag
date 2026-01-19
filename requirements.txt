@@ -6,3 +6,5 @@ whitenoise
 django
 django-widget-tweaks
 psycopg2-binary
+cloudinary
+django-cloudinary-storage
