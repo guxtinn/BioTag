@@ -255,6 +255,14 @@
                 <p class="small mb-0">{{ animal.cuidados_essenciais }}</p>
             </div>
             {% endif %}
+            {% if animal.historico_veterinario %}
+            <div class="memo-box mt-3" style="border-left-color: #0d6efd;"> 
+                <div class="info-label" style="color: #0d6efd;">Histórico Veterinário</div>
+                <div class="small mb-0">
+                    {{ animal.historico_veterinario|linebreaks }}
+                </div>
+            </div>
+            {% endif %}
             {% if user.is_staff %}
             <div class="admin-actions mt-4">
                 <label class="info-label text-danger d-block mb-3">
